@@ -52,7 +52,6 @@ class HotelDAOTest
     {
         int expected = 3;
         int actual = hotels.size();
-        List<HotelDTO> vishoteller = hotels;
 
         assertEquals(expected, actual);
     }
