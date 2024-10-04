@@ -100,9 +100,7 @@ class HotelDAOTest
 
         hotelDAO.delete(id);
 
-        EntityManager em = emf.createEntityManager();
-        Hotel deletedHotel = em.find(Hotel.class, id);
-        em.close();
+        HotelDTO deletedHotel = hotelDAO.read(id);
 
         assertNull(deletedHotel);
     }

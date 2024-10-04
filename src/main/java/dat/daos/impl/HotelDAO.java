@@ -35,6 +35,10 @@ public class HotelDAO implements IDAO<HotelDTO, Integer> {
     public HotelDTO read(Integer integer) {
         try (EntityManager em = emf.createEntityManager()) {
             Hotel hotel = em.find(Hotel.class, integer);
+            if(hotel == null)
+            {
+                return null;
+            }
             return new HotelDTO(hotel);
         }
     }
