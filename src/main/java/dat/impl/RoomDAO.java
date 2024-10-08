@@ -1,7 +1,7 @@
-package dat.daos.impl;
+package dat.impl;
 
 
-import dat.daos.IDAO;
+import dat.IDAO;
 import dat.dtos.HotelDTO;
 import dat.dtos.RoomDTO;
 import dat.entities.Hotel;

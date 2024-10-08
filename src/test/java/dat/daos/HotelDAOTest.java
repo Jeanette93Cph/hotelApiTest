@@ -1,12 +1,11 @@
-package dat.daos.impl.daos;
+package dat.daos;
 
 import dat.config.HibernateConfig;
-import dat.daos.impl.HotelDAO;
-import dat.daos.impl.PopulatorTest;
+import dat.impl.HotelDAO;
+import dat.PopulatorTest;
 import dat.dtos.HotelDTO;
 import dat.dtos.RoomDTO;
 import dat.entities.Hotel;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;

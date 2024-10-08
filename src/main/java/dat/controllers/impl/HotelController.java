@@ -2,7 +2,7 @@ package dat.controllers.impl;
 
 import dat.config.HibernateConfig;
 import dat.controllers.IController;
-import dat.daos.impl.HotelDAO;
+import dat.impl.HotelDAO;
 import dat.dtos.HotelDTO;
 import dat.entities.Hotel;
 import io.javalin.http.Context;

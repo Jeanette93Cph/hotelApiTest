@@ -1,4 +1,4 @@
-package dat.daos;
+package dat;
 
 import java.util.List;
 
