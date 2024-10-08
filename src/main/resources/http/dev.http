@@ -1,66 +1,15 @@
-// Hotel API Security
-
-### Create a new user - this one will only get a USER role by default
-POST {{url}}/auth/register/
-
-{
-    "username": "user1",
-    "password": "test123"
-}
-
-### Login
-POST {{url}}/auth/login/
-
-{
-    "username": "user1",
-    "password": "test123"
-}
-
-> {%
-    client.global.set("jwt_token", response.body.token);
-    console.log("JWT Token:", client.global.get("jwt_token"));
-%}
-
-### Add admin role to user
-POST {{url}}/auth/user/addrole/
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
-{
-    "role": "ADMIN"
-}
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
-###
-GET {{url}}/protected/user_demo/
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
-### Only admin will get a this message
-GET {{url}}/protected/admin_demo/
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
-
-
 // Hotel API
 
-###
-
 GET {{url}}/hotels
-Accept: application/json
 
 ###
 
 GET {{url}}/hotels/2
-Accept: application/json
 
 ###
 
 POST {{url}}/hotels
 Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
 
 {
   "hotelName": "Holiday Inn",
@@ -70,10 +19,8 @@ Authorization: Bearer {{jwt_token}}
 
 ###
 
-PUT {{url}}/hotels/1
+PUT {{url}}/hotels/3
 Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
 
 {
   "hotelName": "Ritz Carlton",
@@ -84,27 +31,21 @@ Authorization: Bearer {{jwt_token}}
 ###
 
 DELETE {{url}}/hotels/5
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
 
 ###
 
 // Room API
 
 GET {{url}}/rooms
-Accept: application/json
 
 ###
 
 GET {{url}}/rooms/1
-Accept: application/json
 
 ###
 
-POST {{url}}/rooms/hotel/1
+POST {{url}}/rooms/hotel/3
 Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{jwt_token}}
 
 {
   "roomNumber": 11,
