@@ -1,12 +1,10 @@
-package dat.daos.impl.daos;
+package dat.daos.impl;
 
+import dat.PopulatorTest;
 import dat.config.HibernateConfig;
-import dat.daos.impl.HotelDAO;
-import dat.daos.impl.PopulatorTest;
 import dat.dtos.HotelDTO;
 import dat.dtos.RoomDTO;
 import dat.entities.Hotel;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +14,6 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HotelDAOTest
 {
-
     private static EntityManagerFactory emf;
     private static HotelDAO hotelDAO = new HotelDAO(emf);
     private static PopulatorTest populator;
@@ -99,7 +96,6 @@ class HotelDAOTest
         int id = hotelDTO.getId();
 
         hotelDAO.delete(id);
-
         HotelDTO deletedHotel = hotelDAO.read(id);
 
         assertNull(deletedHotel);
