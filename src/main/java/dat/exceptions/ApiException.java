@@ -1,8 +1,11 @@
 package dat.exceptions;
 
-public class ApiException extends Exception{
+/**
+ * Purpose: To handle exceptions in the API
+ */
+public class ApiException extends RuntimeException{
 
-    private final int statusCode;
+    private int statusCode;
 
     public ApiException(int statusCode, String message) {
         super(message);

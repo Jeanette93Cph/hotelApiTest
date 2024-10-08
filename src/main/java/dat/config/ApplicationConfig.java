@@ -3,8 +3,12 @@ package dat.config;
 import dat.controllers.impl.ExceptionController;
 import dat.exceptions.ApiException;
 import dat.routes.Routes;
+import dat.security.controllers.AccessController;
+import dat.security.routes.SecurityRoutes;
+import dat.utils.Utils;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
+import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -19,14 +23,17 @@ import java.util.Properties;
 public class ApplicationConfig {
 
     private static Routes routes;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
     private static final ExceptionController exceptionController = new ExceptionController();
+    private static AccessController accessController = new AccessController();
 
     public static void configuration(JavalinConfig config) {
         config.router.contextPath = "/api/v1"; // base path for all routes
         config.showJavalinBanner = false;
         config.http.defaultContentType = "application/json"; // default content type for requests
         config.router.apiBuilder(routes.getRoutes());
+        config.router.apiBuilder(SecurityRoutes.getSecuredRoutes());
+        config.router.apiBuilder(SecurityRoutes.getSecurityRoutes());
 
         // Plugins
         config.bundledPlugins.enableRouteOverview("/routes"); // enables route overview at /routes
@@ -48,8 +55,9 @@ public class ApplicationConfig {
     public static Javalin startServer(int port) {
         routes = new Routes();
         var app = Javalin.create(ApplicationConfig::configuration);
-        app.exception(ApiException.class, exceptionController::apiExceptionHandler);
-        app.exception(Exception.class, exceptionController::exceptionHandler);
+        app.beforeMatched(accessController::accessHandler);
+        app.exception(Exception.class, ApplicationConfig::generalExceptionHandler);
+        app.exception(ApiException.class, ApplicationConfig::apiExceptionHandler);
         app.start(port);
         return app;
     }
@@ -57,4 +65,17 @@ public class ApplicationConfig {
     public static void stopServer(Javalin app) {
         app.stop();
     }
+
+    private static void generalExceptionHandler(Exception e, Context ctx) {
+        logger.error("An unhandled exception occurred", e.getMessage());
+        ctx.json(Utils.convertToJsonMessage(ctx, "error", e.getMessage()));
+    }
+
+    public static void apiExceptionHandler(ApiException e, Context ctx) {
+        ctx.status(e.getStatusCode());
+        logger.warn("An API exception occurred: Code: {}, Message: {}", e.getStatusCode(), e.getMessage());
+        ctx.json(Utils.convertToJsonMessage(ctx, "warning", e.getMessage()));
+    }
+
+
 }
