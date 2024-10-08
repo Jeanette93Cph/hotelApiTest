@@ -1,14 +1,16 @@
-package dat;
+package dat.daos.impl;
 
-import dat.daos.impl.HotelDAO;
+import dat.config.HibernateConfig;
 import dat.dtos.HotelDTO;
 import dat.dtos.RoomDTO;
 import dat.entities.Hotel;
 import dat.entities.RoomType;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class PopulatorTest
 {
