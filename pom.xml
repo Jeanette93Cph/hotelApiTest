@@ -16,6 +16,8 @@
         <restassured.version>5.5.0</restassured.version>
         <testcontainers.version>1.18.0</testcontainers.version>
         <junit.version>5.9.1</junit.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
+        <token.security.version>1.0.1</token.security.version>
 
         <!-- Project properties  -->
         <!--  token    -->
@@ -30,7 +32,28 @@
         <!--  Javalin    -->
         <javalin.port>7070</javalin.port>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.Hartmannsolution</groupId>
+            <artifactId>TokenSecurity</artifactId>
+            <version>${token.security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>${jbcrypt.version}</version>
+        </dependency>
+
 
         <!--   R.E.S.T     -->
 

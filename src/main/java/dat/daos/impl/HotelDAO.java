@@ -5,6 +5,7 @@ import dat.dtos.HotelDTO;
 import dat.entities.Hotel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.TypedQuery;
 import lombok.NoArgsConstructor;
 
@@ -64,15 +65,21 @@ public class HotelDAO implements IDAO<HotelDTO, Integer> {
 
     @Override
     public HotelDTO update(Integer integer, HotelDTO hotelDTO) {
-        try (EntityManager em = emf.createEntityManager()) {
+        if(hotelDTO == null)
+        {
+            throw new IllegalArgumentException("HotelDTO cannot be null");
+        }
+
+        try (EntityManager em = emf.createEntityManager())
+        {
             em.getTransaction().begin();
             Hotel h = em.find(Hotel.class, integer);
             h.setHotelName(hotelDTO.getHotelName());
             h.setHotelAddress(hotelDTO.getHotelAddress());
             h.setHotelType(hotelDTO.getHotelType());
-            Hotel mergedHotel = em.merge(h);
+            em.merge(h);
             em.getTransaction().commit();
-            return mergedHotel != null ? new HotelDTO(mergedHotel) : null;
+            return new HotelDTO(h);
         }
     }
 
